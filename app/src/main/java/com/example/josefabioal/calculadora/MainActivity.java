@@ -62,7 +62,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.button0:
                 TextView output = (TextView) findViewById(R.id.textView);
                 String str = output.getText().toString();
-                System.out.println(str);
                 if(str.equals("0")) {
                     //do nothing, because you cant add a 0 to a 0
                 }else{
@@ -72,47 +71,101 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             case R.id.button1:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("1");
+                str = output.getText().toString();
+                String strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("1");
+                }else{
+                    output.append("1");
+                }
                 break;
 
             case R.id.button2:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("2");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("2");
+                }else{
+                    output.append("2");
+                }
                 break;
 
             case R.id.button3:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("3");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("3");
+                }else{
+                    output.append("3");
+                }
                 break;
 
             case R.id.button4:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("4");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("4");
+                }else{
+                    output.append("4");
+                }
                 break;
 
             case R.id.button5:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("5");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("5");
+                }else{
+                    output.append("5");
+                }
                 break;
 
             case R.id.button6:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("6");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("6");
+                }else{
+                    output.append("6");
+                }
                 break;
 
             case R.id.button7:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("7");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("7");
+                }else{
+                    output.append("7");
+                }
                 break;
 
             case R.id.button8:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("8");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("8");
+                }else{
+                    output.append("8");
+                }
                 break;
 
             case R.id.button9:
                 output = (TextView) findViewById(R.id.textView);
-                output.append("9");
+                str = output.getText().toString();
+                strCero = str.substring(str.length()-1 , str.length());
+                if(strCero.equals("0") && str.length() == 1){
+                    output.setText("9");
+                }else{
+                    output.append("9");
+                }
                 break;
 
             case R.id.buttonDel:
@@ -134,14 +187,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 output.setText("0");
 
             default:
-/*                output = (TextView) findViewById(R.id.textView);
-
-                str = output.getText().toString();
-
-                if(str == "0"){
-                }else if(str == "" || str == null){
-                    output.setText("0");
-                }*/
                 break;
 
         }
