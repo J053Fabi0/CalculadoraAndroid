@@ -1,14 +1,14 @@
 package com.example.josefabioal.calculadora;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity implements View.OnClickListener {
-
+    Toast mToast;
     @Override
     protected void onCreate(Bundle savedInstanceState)/*  */ {
         super.onCreate(savedInstanceState);
@@ -56,139 +56,58 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         // default method for handling onClick Events..
-
-        switch (v.getId()){
+        TextView output = (TextView) findViewById(R.id.textView);
+        String str;
+        switch (v.getId()) {
 
             case R.id.button0:
-                TextView output = (TextView) findViewById(R.id.textView);
-                String str = output.getText().toString();
-                if(str.equals("0")) {
-                    //do nothing, because you cant add a 0 to a 0
-                }else{
+                str = output.getText().toString();
+                //because you cant add a 0 to a 0
+                //same case with -0
+                if (!str.equals("0") && !str.equals("-0")) {
                     output.append("0");
                 }
                 break;
 
             case R.id.button1:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                String strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("1");
-                }else{
-                    output.append("1");
-                }
-                break;
-
             case R.id.button2:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("2");
-                }else{
-                    output.append("2");
-                }
-                break;
-
             case R.id.button3:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("3");
-                }else{
-                    output.append("3");
-                }
-                break;
-
             case R.id.button4:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("4");
-                }else{
-                    output.append("4");
-                }
-                break;
-
             case R.id.button5:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("5");
-                }else{
-                    output.append("5");
-                }
-                break;
-
             case R.id.button6:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("6");
-                }else{
-                    output.append("6");
-                }
-                break;
-
             case R.id.button7:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("7");
-                }else{
-                    output.append("7");
-                }
-                break;
-
             case R.id.button8:
-                output = (TextView) findViewById(R.id.textView);
+            case R.id.button9: {
+                Button MyButton = (Button) v;
+                String myDigit = MyButton.getText().toString();
                 str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("8");
-                }else{
-                    output.append("8");
+                if ("0".equals(str) && str.length() == 1) {
+                    output.setText(myDigit);
+                } else {
+                    output.append(myDigit);
                 }
                 break;
-
-            case R.id.button9:
-                output = (TextView) findViewById(R.id.textView);
-                str = output.getText().toString();
-                strCero = str.substring(str.length()-1 , str.length());
-                if(strCero.equals("0") && str.length() == 1){
-                    output.setText("9");
-                }else{
-                    output.append("9");
-                }
-                break;
-
+            }
             case R.id.buttonDel:
-
-                output = (TextView) findViewById(R.id.textView);
-
                 str = output.getText().toString();
                 int length = str.length();
-                if (length >= 2 ) {
+                if (length > 1) {
                     str = str.substring(0, str.length() - 1);
                     output.setText(str);
-                } else if (length <= 2 ) {
+                } else {
                     output.setText("0");
                 }
                 break;
-
             case R.id.buttonC:
-                output = (TextView) findViewById(R.id.textView);
                 output.setText("0");
-
-            default:
                 break;
-
+            default:
+                if(null != mToast){
+                    mToast.cancel();
+                }
+                mToast = Toast.makeText(this, "Unknow Action", Toast.LENGTH_SHORT);
+                mToast.show();
+                break;
         }
     }
 }
