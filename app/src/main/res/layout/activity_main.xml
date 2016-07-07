@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal"
             android:textAlignment="viewEnd"
             android:textSize="46dp"
-            android:inputType="number"
+            android:inputType="numberSigned|numberDecimal"
             android:textStyle="bold"
             android:maxLength="12"
             android:text="0" />
