@@ -28,7 +28,7 @@
             android:inputType="numberSigned|numberDecimal"
             android:textStyle="bold"
             android:maxLength="12"
-            android:text="-8" />
+            android:text="0" />
     </LinearLayout>
 
     <GridLayout

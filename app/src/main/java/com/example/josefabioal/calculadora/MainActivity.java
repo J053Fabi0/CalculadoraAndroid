@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class MainActivity extends Activity implements View.OnClickListener {
     private Toast mToast;
 
@@ -15,11 +17,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
             R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9,
     };
 
-    private static int firstNumber;
-    private static int secondNumber;
+    private static double firstNumber;
+    private static double secondNumber;
     private static int operacion;
-    private static int totalInt;
+    private static double totalInt;
     private static String totalString;
+    private static boolean hasNegative;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
         String str;
         String str2;
 
+        str = output.getText().toString();
+        str2 = str.substring(0, 1);
+
+        if(str2.equals("-")){
+            hasNegative = true;
+        }else{
+            hasNegative = false;
+        }
+
         switch (view.getId()) {
 
             case R.id.button0: {
@@ -92,9 +104,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 str = output.getText().toString();
                 int length = str.length();
                 if (length > 1) {
-                    str = str.substring(0, str.length() - 1);
-                    output.setText(str);
+                    if(length == 2 && hasNegative && str.substring(1).equals("0")){
+                        output.setText("-0");
+                    }else if(length == 2 && hasNegative && ! str.substring(1).equals("0")){
+                        output.setText("-0");
+                    }else{
+                        str = str.substring(0, str.length() - 1);
+                        output.setText(str);
+                    }
                 } else {
+
                     output.setText("0");
                 }
                 break;
@@ -108,13 +127,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.buttonNegPos:
-                str = output.getText().toString();
-                System.out.println("str: " + str);
-
-                str2 = str.substring(0, 1);
-                System.out.println("str2: " + str2);
-
-                if(str2.equals("-")){
+             //   str = output.getText().toString();
+           //     str2 = str.substring(0, 1);
+                if(hasNegative == true){
                     output.setText(str.substring(1));
                 }else{
                     output.setText("-" + str);
@@ -129,57 +144,57 @@ public class MainActivity extends Activity implements View.OnClickListener {
              */
             case R.id.buttonDivide:
                 str = output.getText().toString();
-                firstNumber = Integer.parseInt(str);
+                firstNumber = Double.parseDouble(str);
                 operacion = 1;
                 output.setText("0");
                 break;
 
             case R.id.buttonMultiplication:
                 str = output.getText().toString();
-                firstNumber = Integer.parseInt(str);
+                firstNumber = Double.parseDouble(str);
                 operacion = 2;
                 output.setText("0");
                 break;
 
             case R.id.buttonMinus:
                 str = output.getText().toString();
-                firstNumber = Integer.parseInt(str);
+                firstNumber = Double.parseDouble(str);
                 operacion = 3;
                 output.setText("0");
                 break;
 
             case R.id.buttonPlus:
                 str = output.getText().toString();
-                firstNumber = Integer.parseInt(str);
+                firstNumber = Double.parseDouble(str);
                 operacion = 4;
                 output.setText("0");
                 break;
 
             case R.id.buttonEquals:
                 str2 = output.getText().toString();
-                secondNumber = Integer.parseInt(str2);
+                secondNumber = Double.parseDouble(str2);
                 if(operacion == 1){
 
                     totalInt = firstNumber / secondNumber;
-                    totalString = Integer.toString(totalInt);
+                    totalString = String.valueOf(totalInt);
                     output.setText(totalString);
 
                 }else if(operacion == 2){
 
                     totalInt = firstNumber * secondNumber;
-                    totalString = Integer.toString(totalInt);
+                    totalString = String.valueOf(totalInt);
                     output.setText(totalString);
 
                 }else if(operacion == 3){
 
                     totalInt = firstNumber - secondNumber;
-                    totalString = Integer.toString(totalInt);
+                    totalString = String.valueOf(totalInt);
                     output.setText(totalString);
 
                 }else if(operacion == 4){
 
                     totalInt = firstNumber + secondNumber;
-                    totalString = Integer.toString(totalInt);
+                    totalString = String.valueOf(totalInt);
                     output.setText(totalString);
 
                 }else{
