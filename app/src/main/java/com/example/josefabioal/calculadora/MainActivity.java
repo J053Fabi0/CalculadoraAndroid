@@ -9,10 +9,18 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements View.OnClickListener {
     private Toast mToast;
+
     private static int[] myIDArray = {
             R.id.button0, R.id.button1, R.id.button2, R.id.button3, R.id.button4,
             R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9,
     };
+
+    private static int firstNumber;
+    private static int secondNumber;
+    private static int operacion;
+    private static int totalInt;
+    private static String totalString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +45,20 @@ public class MainActivity extends Activity implements View.OnClickListener {
         c.setOnClickListener(this);
         Button minus = (Button) findViewById(R.id.buttonMinus);
         minus.setOnClickListener(this);
-        Button x = (Button) findViewById(R.id.buttonX);
+        Button x = (Button) findViewById(R.id.buttonMultiplication);
         x.setOnClickListener(this);
+        Button negPos = (Button) findViewById(R.id.buttonNegPos);
+        negPos.setOnClickListener(this);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         // default method for handling onClick Events..
         TextView output = (TextView) findViewById(R.id.textView);
         String str;
-        switch (v.getId()) {
+        String str2;
+
+        switch (view.getId()) {
 
             case R.id.button0: {
                 str = output.getText().toString();
@@ -66,8 +78,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.button7:
             case R.id.button8:
             case R.id.button9: {
-                Button MyButton = (Button) v;
-                String myDigit = MyButton.getText().toString();
+                Button MyButton = (Button) view; //El boton en tipo boton
+                String myDigit = MyButton.getText().toString(); //MyButton en texto
                 str = output.getText().toString();
                 if ("0".equals(str) && str.length() == 1) {
                     output.setText(myDigit);
@@ -95,11 +107,92 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 output.append(".");
                 break;
 
+            case R.id.buttonNegPos:
+                str = output.getText().toString();
+                System.out.println("str: " + str);
+
+                str2 = str.substring(0, 1);
+                System.out.println("str2: " + str2);
+
+                if(str2.equals("-")){
+                    output.setText(str.substring(1));
+                }else{
+                    output.setText("-" + str);
+                }
+                break;
+
+            /*
+            Divide = 1
+            Multiplication = 2
+            Rest = 3
+            Addition = 4
+             */
+            case R.id.buttonDivide:
+                str = output.getText().toString();
+                firstNumber = Integer.parseInt(str);
+                operacion = 1;
+                output.setText("0");
+                break;
+
+            case R.id.buttonMultiplication:
+                str = output.getText().toString();
+                firstNumber = Integer.parseInt(str);
+                operacion = 2;
+                output.setText("0");
+                break;
+
+            case R.id.buttonMinus:
+                str = output.getText().toString();
+                firstNumber = Integer.parseInt(str);
+                operacion = 3;
+                output.setText("0");
+                break;
+
+            case R.id.buttonPlus:
+                str = output.getText().toString();
+                firstNumber = Integer.parseInt(str);
+                operacion = 4;
+                output.setText("0");
+                break;
+
+            case R.id.buttonEquals:
+                str2 = output.getText().toString();
+                secondNumber = Integer.parseInt(str2);
+                if(operacion == 1){
+
+                    totalInt = firstNumber / secondNumber;
+                    totalString = Integer.toString(totalInt);
+                    output.setText(totalString);
+
+                }else if(operacion == 2){
+
+                    totalInt = firstNumber * secondNumber;
+                    totalString = Integer.toString(totalInt);
+                    output.setText(totalString);
+
+                }else if(operacion == 3){
+
+                    totalInt = firstNumber - secondNumber;
+                    totalString = Integer.toString(totalInt);
+                    output.setText(totalString);
+
+                }else if(operacion == 4){
+
+                    totalInt = firstNumber + secondNumber;
+                    totalString = Integer.toString(totalInt);
+                    output.setText(totalString);
+
+                }else{
+                    mToast = Toast.makeText(this, "Unknown error. Please restart application.", Toast.LENGTH_SHORT);
+                    mToast.show();
+                }
+                break;
+
             default:
                 if(null != mToast){
                     mToast.cancel();
                 }
-                mToast = Toast.makeText(this, "Unknow Action", Toast.LENGTH_SHORT);
+                mToast = Toast.makeText(this, "Unknown Action", Toast.LENGTH_SHORT);
                 mToast.show();
                 break;
         }
