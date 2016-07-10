@@ -31,8 +31,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         setContentView(R.layout.activity_main);
         Button numero;
-        for(int i=0;i<myIDArray.length;i++) {
-            numero = (Button) findViewById(myIDArray[i]);
+        for(int aMyIDArray : myIDArray) {
+            numero = (Button) findViewById(aMyIDArray);
             numero.setOnClickListener(this);
         }
         Button point = (Button) findViewById(R.id.buttonPoint);
@@ -66,22 +66,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         str2 = str.substring(0, 1);
 
 
-
-        if(str2.equals("-")){
-            hasNegative = true;
-        }else{
-            hasNegative = false;
-        }
+        hasNegative = str2.equals("-");
 
         switch (view.getId()) {
 
             case R.id.button0: {
 
-                if(needRestart == true){
+                if(needRestart){
                     output.setText("0");
                     needRestart = false;
                 }
+
                 str = output.getText().toString();
+
+                if(str.length() >= 3) {
+
+                    if (str.substring(str.length()-2, str.length()).equals(".0")) {
+                        str = str.substring(0, str.length()-1);
+                        output.setText(str);
+                    }
+                }
                 //because you cant add a 0 to a 0
                 //same case with -0
                 if (!str.equals("0") && !str.equals("-0")) {
@@ -89,6 +93,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             }
+
+
             case R.id.button1:
             case R.id.button2:
             case R.id.button3:
@@ -98,13 +104,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.button7:
             case R.id.button8:
             case R.id.button9: {
-                if(needRestart == true){
+                if(needRestart){
                     output.setText("0");
                     needRestart = false;
                 }
+
                 Button MyButton = (Button) view;
                 String myDigit = MyButton.getText().toString(); //Text of the button you click in String. Example = 1
                 str = output.getText().toString();
+
+                if(str.length() >= 3) {
+
+                    if (str.substring(str.length()-2, str.length()).equals(".0")) {
+                        str = str.substring(0, str.length()-1);
+                        output.setText(str);
+                    }
+                }
+
                 if ("0".equals(str) && str.length() == 1) {
                     output.setText(myDigit);
                 }else if("-0".equals(str) && str.length() == 2){
@@ -116,6 +132,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
             }
             case R.id.buttonDel:
+                if(needRestart){
+                    output.setText("0");
+                    needRestart = false;
+                }
                 str = output.getText().toString();
                 int length = str.length();
                 if (length > 1) {
@@ -137,14 +157,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 output.setText("0");
                 break;
 
+
+
             case R.id.buttonPoint:
-                output.append(".");
+                if(needRestart){
+                    output.setText("0.0");
+                    needRestart = false;
+                }
+                str = output.getText().toString();
+
+                if(str.length() >= 3) { //Do not try to simplify this to one if, it will not work
+
+                    if (str.substring(str.length()-2, str.length()).equals(".0")) {
+                        str = str.substring(0, str.length()-1);
+                        output.setText(str);
+                    }
+                }
+
+                output.append(".0");
                 break;
 
             case R.id.buttonNegPos:
-             //   str = output.getText().toString();
-           //     str2 = str.substring(0, 1);
-                if(hasNegative == true){
+                if(needRestart){
+                    output.setText("0"); //I allready debug it and it run this line, but the text dont change!!
+                    needRestart = false;
+                }
+
+                if(hasNegative){
                     output.setText(str.substring(1));
                 }else{
                     output.setText("-" + str);
