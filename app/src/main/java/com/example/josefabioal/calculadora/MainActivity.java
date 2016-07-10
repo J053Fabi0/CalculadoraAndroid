@@ -17,12 +17,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
             R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9,
     };
 
-    private static double firstNumber;
+    private static double firstNumber = 0;
     private static double secondNumber;
     private static int operacion;
     private static double totalInt;
     private static String totalString;
     private static boolean hasNegative;
+    private static boolean needRestart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         str = output.getText().toString();
         str2 = str.substring(0, 1);
 
+
+
         if(str2.equals("-")){
             hasNegative = true;
         }else{
@@ -73,6 +76,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.button0: {
+
+                if(needRestart == true){
+                    output.setText("0");
+                    needRestart = false;
+                }
                 str = output.getText().toString();
                 //because you cant add a 0 to a 0
                 //same case with -0
@@ -90,14 +98,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.button7:
             case R.id.button8:
             case R.id.button9: {
-                Button MyButton = (Button) view; //El boton en tipo boton
-                String myDigit = MyButton.getText().toString(); //MyButton en texto
+                if(needRestart == true){
+                    output.setText("0");
+                    needRestart = false;
+                }
+                Button MyButton = (Button) view;
+                String myDigit = MyButton.getText().toString(); //Text of the button you click in String. Example = 1
                 str = output.getText().toString();
                 if ("0".equals(str) && str.length() == 1) {
                     output.setText(myDigit);
+                }else if("-0".equals(str) && str.length() == 2){
+                    output.setText("-" + myDigit);
                 } else {
                     output.append(myDigit);
                 }
+
                 break;
             }
             case R.id.buttonDel:
@@ -173,32 +188,53 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.buttonEquals:
                 str2 = output.getText().toString();
                 secondNumber = Double.parseDouble(str2);
+
                 if(operacion == 1){
 
                     totalInt = firstNumber / secondNumber;
                     totalString = String.valueOf(totalInt);
+
+                    if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
+                        totalString = totalString.substring(0, totalString.length() - 2);
+                    }
                     output.setText(totalString);
+                    needRestart = true;
 
                 }else if(operacion == 2){
 
                     totalInt = firstNumber * secondNumber;
                     totalString = String.valueOf(totalInt);
+
+                    if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
+                        totalString = totalString.substring(0, totalString.length() - 2);
+                    }
                     output.setText(totalString);
+                    needRestart = true;
 
                 }else if(operacion == 3){
 
                     totalInt = firstNumber - secondNumber;
                     totalString = String.valueOf(totalInt);
+
+                    if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
+                        totalString = totalString.substring(0, totalString.length() - 2);
+                    }
                     output.setText(totalString);
+                    needRestart = true;
 
                 }else if(operacion == 4){
 
                     totalInt = firstNumber + secondNumber;
                     totalString = String.valueOf(totalInt);
+
+                    if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
+                        totalString = totalString.substring(0, totalString.length() - 2);
+                    }
                     output.setText(totalString);
+                    needRestart = true;
 
                 }else{
-                    mToast = Toast.makeText(this, "Unknown error. Please restart application.", Toast.LENGTH_SHORT);
+                    mToast = Toast.makeText(this, "Unknown error", Toast.LENGTH_SHORT);
                     mToast.show();
                 }
                 break;
