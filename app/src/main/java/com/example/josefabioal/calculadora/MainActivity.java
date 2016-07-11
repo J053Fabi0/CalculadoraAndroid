@@ -74,6 +74,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 if(needRestart){
                     output.setText("0");
+                    firstNumber = 0;
+                    secondNumber = 0;
                     needRestart = false;
                 }
 
@@ -86,7 +88,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                     if (str.substring(str.length()-2, str.length()).equals(".0")) {
                         //str = str.substring(0, str.length()-1);
-                        output.setText(str+"0");
+                        output.setText(str + "0");
                     }
                 }
                 break;
@@ -104,6 +106,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.button9: {
                 if(needRestart){
                     output.setText("0");
+                    firstNumber = 0;
+                    secondNumber = 0;
                     needRestart = false;
                 }
 
@@ -132,6 +136,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.buttonDel:
                 if(needRestart){
                     output.setText("0");
+                    firstNumber = 0;
+                    secondNumber = 0;
                     needRestart = false;
                 }
                 str = output.getText().toString();
@@ -168,6 +174,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.buttonPoint:
                 if(needRestart){
                     output.setText("0.0");
+                    firstNumber = 0;
+                    secondNumber = 0;
                     needRestart = false;
                 }
                 str = output.getText().toString();
@@ -186,15 +194,15 @@ public class MainActivity extends Activity implements View.OnClickListener {
             case R.id.buttonNegPos:
                 if(hasNegative){
                     if(needRestart){
-                        output.append("0");
-                        output.setText("0");
+                        firstNumber = 0;
+                        secondNumber = 0;
                         needRestart = false;
                     }
                     output.setText(str.substring(1));
                 }else{
                     if(needRestart){
-                        output.append("0");
-                        output.setText("0");
+                        firstNumber = 0;
+                        secondNumber = 0;
                         needRestart = false;
                     }
                     output.setText("-" + str);
@@ -236,13 +244,23 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.buttonEquals:
-                str2 = output.getText().toString();
-                secondNumber = Double.parseDouble(str2);
+                //str2 = output.getText().toString();
+               // secondNumber = Double.parseDouble(str2);
 
                 if(operacion == 1){
 
-                    totalInt = firstNumber / secondNumber;
-                    totalString = String.valueOf(totalInt);
+
+                    if(!needRestart) {
+                        str2 = output.getText().toString();
+                        secondNumber = Double.parseDouble(str2);
+
+                        totalInt = firstNumber / secondNumber;
+                        totalString = String.valueOf(totalInt);
+                    } else{
+                        totalInt = totalInt / secondNumber;
+
+                        totalString =  String.valueOf(totalInt);
+                    }
 
                     if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
                         totalString = totalString.substring(0, totalString.length() - 2);
@@ -252,8 +270,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 }else if(operacion == 2){
 
-                    totalInt = firstNumber * secondNumber;
-                    totalString = String.valueOf(totalInt);
+                    if(!needRestart) {
+                        str2 = output.getText().toString();
+                        secondNumber = Double.parseDouble(str2);
+
+                        totalInt = firstNumber * secondNumber;
+                        totalString = String.valueOf(totalInt);
+                    } else{
+                        totalInt = totalInt * secondNumber;
+
+                        totalString =  String.valueOf(totalInt);
+                    }
 
                     if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
                         totalString = totalString.substring(0, totalString.length() - 2);
@@ -263,8 +290,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
                 }else if(operacion == 3){
 
-                    totalInt = firstNumber - secondNumber;
-                    totalString = String.valueOf(totalInt);
+                    if(!needRestart) {
+                        str2 = output.getText().toString();
+                        secondNumber = Double.parseDouble(str2);
+
+                        totalInt = firstNumber - secondNumber;
+                        totalString = String.valueOf(totalInt);
+                    } else{
+                        totalInt = totalInt - secondNumber;
+
+                        totalString =  String.valueOf(totalInt);
+                    }
 
                     if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
                         totalString = totalString.substring(0, totalString.length() - 2);
@@ -273,9 +309,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     needRestart = true;
 
                 }else if(operacion == 4){
+                    if(!needRestart) {
+                        str2 = output.getText().toString();
+                        secondNumber = Double.parseDouble(str2);
 
-                    totalInt = firstNumber + secondNumber;
-                    totalString = String.valueOf(totalInt);
+                        totalInt = firstNumber + secondNumber;
+                        totalString = String.valueOf(totalInt);
+                    } else{
+                        totalInt = totalInt + secondNumber;
+
+                        totalString =  String.valueOf(totalInt);
+                    }
 
                     if(totalString.substring(totalString.length() - 2, totalString.length()).equals(".0")){
                         totalString = totalString.substring(0, totalString.length() - 2);
