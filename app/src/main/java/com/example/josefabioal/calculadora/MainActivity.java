@@ -78,18 +78,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
 
                 str = output.getText().toString();
-
-                if(str.length() >= 3) {
-
-                    if (str.substring(str.length()-2, str.length()).equals(".0")) {
-                        str = str.substring(0, str.length()-1);
-                        output.setText(str);
-                    }
-                }
                 //because you cant add a 0 to a 0
                 //same case with -0
                 if (!str.equals("0") && !str.equals("-0")) {
                     output.append("0");
+                } else if(str.length() >= 3) {
+
+                    if (str.substring(str.length()-2, str.length()).equals(".0")) {
+                        //str = str.substring(0, str.length()-1);
+                        output.setText(str+"0");
+                    }
                 }
                 break;
             }
@@ -138,7 +136,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 str = output.getText().toString();
                 int length = str.length();
-                if (length > 1) {
+                if(str.length() >= 3 && str.substring(str.length()-2, str.length()-1).equals(".")){
+                    if(! str.substring(str.length()-1, str.length()).equals("0")){
+                        output.setText(str.substring(0, str.length()-1) + "0");
+                    }else if(str.substring(str.length()-1, str.length()).equals("0")){
+                        output.setText(str.substring(0, str.length()-2));
+                    }
+                }else if (length > 1) {
                     if(length == 2 && hasNegative && str.substring(1).equals("0")){
                         output.setText("-0");
                     }else if(length == 2 && hasNegative && ! str.substring(1).equals("0")){
@@ -155,6 +159,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
             case R.id.buttonC:
                 output.setText("0");
+                firstNumber = 0;
+                secondNumber = 0;
                 break;
 
 
@@ -178,14 +184,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.buttonNegPos:
-                if(needRestart){
-                    output.setText("0"); //I allready debug it and it run this line, but the text dont change!!
-                    needRestart = false;
-                }
-
                 if(hasNegative){
+                    if(needRestart){
+                        output.append("0");
+                        output.setText("0");
+                        needRestart = false;
+                    }
                     output.setText(str.substring(1));
                 }else{
+                    if(needRestart){
+                        output.append("0");
+                        output.setText("0");
+                        needRestart = false;
+                    }
                     output.setText("-" + str);
                 }
                 break;
